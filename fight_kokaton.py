@@ -205,7 +205,7 @@ def main():
                     score.point += 1
                     pg.display.update()
             beams = [beam for beam in beams if beam is not None]
-        bombs = [bomb for bomb in bombs if bomb is not None]
+        bombs = [bomb for bomb in bombs if bomb is not None]  # 自分なりのやり方教えてくれてありがとう
 
         key_lst = pg.key.get_pressed()
         bird.update(key_lst, screen)
