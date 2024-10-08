@@ -140,6 +140,28 @@ class Bomb:
         self.rct.move_ip(self.vx, self.vy)
         screen.blit(self.img, self.rct)
 
+class Score:
+    """
+    スコア表示に関するクラス
+    """
+    def __init__(self):
+        """
+        スコアの文字列Surfaceを生成する
+        """
+        self.fonto = pg.font.SysFont("hgp創英角ﾎﾟｯﾌﾟ体", 30)  # フォントの設定
+        self.color = (0, 0, 255)  # 文字色の設定
+        self.point = 0  # スコアの初期値の設定
+        self.img = self.fonto.render("スコア：0", 0, (0, 0, 255))  # 文字列Surfaceの生成
+        self.rct = self.img.get_rect()
+        self.rct.center = (100, HEIGHT-50)  # 文字列の中心座標
+
+    def update(self, screen: pg.Surface):
+        """
+        現在のスコアを表示させる文字列Surfaceの生成
+        """
+        self.img = self.fonto.render(f"スコア：{self.point}", 0, (0, 0, 255))  # 現在のスコアを表示させる文字列Surfaceの生成
+        screen.blit(self.img, self.rct)
+
 
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
@@ -149,6 +171,7 @@ def main():
     beam = None
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((255, 0, 0), 10) for i in range(NUM_OF_BOMBS)]
+    score = Score()
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -178,6 +201,7 @@ def main():
                 if beam.rct.colliderect(bomb.rct):  # ビームと爆弾が衝突したら
                     beam, bombs[j] = None, None
                     bird.change_img(6, screen)
+                    score.point += 1
                     pg.display.update()
         bombs = [bomb for bomb in bombs if bomb is not None] 
 
@@ -188,6 +212,7 @@ def main():
         # if bomb is not None:
         for bomb in bombs:
             bomb.update(screen)
+        score.update(screen)
         pg.display.update()
         tmr += 1
         clock.tick(50)
