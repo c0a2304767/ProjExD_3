@@ -163,6 +163,28 @@ class Score:
         screen.blit(self.img, self.rct)
 
 
+class Explosion:
+    """
+    爆発エフェクトに関するクラス
+    """
+
+    def __init__(self):
+        """
+        爆発に関する情報の整理
+        """
+        self.img = pg.image.load("fig/explosion.png")
+        self.imgs = pg.transform.flip(self.img, True, True)
+        self.rct = self.img.get_rect()
+        self.x, self.y = int, int
+        self.rct.center = {(self.x, self.y)}
+
+    def update(self):
+        self.life -= 1
+        if self.life is True:
+
+
+
+
 def main():
     pg.display.set_caption("たたかえ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))    
@@ -173,6 +195,7 @@ def main():
     # bomb = Bomb((255, 0, 0), 10)
     bombs = [Bomb((255, 0, 0), 10) for i in range(NUM_OF_BOMBS)]
     score = Score()
+    explotion = []
     clock = pg.time.Clock()
     tmr = 0
     while True:
